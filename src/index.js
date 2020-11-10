@@ -16,5 +16,5 @@ rutas.adicionar(app);
 
 // Levantar el servidor
 app.listen(puerto, host, () => {
-    console.log("Servidor: http://"+host+":"+puerto);
+    console.log("Servidor levantado: http://"+host+":"+puerto);
 });
