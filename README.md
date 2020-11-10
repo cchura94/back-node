@@ -38,3 +38,9 @@ git remote add origin https://github.com/cchura94/back-node.git
 ```
 git push -u origin master
 ```
+
+- PARA CLONAR UN RESPOSITORIO
+
+```
+git clone https://github.com/cchura94/back-node.git
+```
