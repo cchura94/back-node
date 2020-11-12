@@ -39,7 +39,7 @@ const Persona = db.define("Persona", {
 
 })
 
-//Relacion entre Usuario y Persona
+//Relacion uno a uno,  entre Usuario y Persona
 Usuario.hasOne(Persona, {foreignKey: 'usuario_id'})
 
 
@@ -52,10 +52,41 @@ const Pedido = db.define("Pedido", {
 
 })
 
+//Relacion de uno  a Muchos
 Persona.hasMany(Pedido, {foreignKey: 'persona_id'})
+
+//Producto
+const Producto = db.define("Producto", {
+    titulo: {type: Sequelize.STRING(200), allowNull: false},
+    precio: {type: DataTypes.DECIMAL(10, 2)},
+    cantidad: {type: DataTypes.INTEGER, defaultValue: 0},
+    disponibilidad: {type: Sequelize.BOOLEAN, allowNull: true, defaultValue: true},
+    imagen: {type: Sequelize.STRING(200), allowNull: true},
+})
+
+//Definir la tabla relación
+const PedidoProducto = db.define("pedido_producto");
+
+// Relacion de Muchos a Muchos
+Pedido.belongsToMany(Producto, {through: PedidoProducto});
+Producto.belongsToMany(Pedido, {through: PedidoProducto});
+
+// Role
+const Role = db.define("Role", {
+    nombre: {type: Sequelize.STRING(30), allowNull: false},
+    detalle: {type: Sequelize.TEXT, allowNull: true}
+});
+
+// Role.schema("admin")
+
+//Relacion Muchos a Muchos 2da forma
+Usuario.belongsToMany(Role, {through: 'role_user'});
+Role.belongsToMany(Usuario, {through: 'role_user'});
 
 
 module.exports = {
     Usuario,
-    Persona
+    Persona,
+    Producto,
+    Role
 }

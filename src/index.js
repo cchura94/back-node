@@ -26,6 +26,9 @@ var host = "127.0.0.1";
 // Configuración con los módulos
 var app = express();
 
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
 // habilitar rutas
 rutas.adicionar(app);
 
