@@ -10,6 +10,7 @@ function adicionar(app){
 
     // Rutas de Usuario
     app.post("/usuario", usuario_controller.nuevoUsuario);
+    app.post("/usuario2", usuario_controller.nuevoUsuario2);
 
 }
 

@@ -15,8 +15,8 @@ async function testConexion() {
 }
 testConexion()
 
-db.sync({ force: true });
-console.log("Modelos migrados.");
+//db.sync({ force: true });
+//console.log("Modelos migrados.");
 
 
 // declaración de variables
