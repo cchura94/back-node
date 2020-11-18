@@ -1,6 +1,7 @@
 const inicio_controller = require("./../controllers/inicioController");
 const usuario_controller = require("./../controllers/usuarioController");
 const authController = require("./../controllers/authController");
+import productoController from "./../controllers/productoController";
 
 function adicionar(app){
 
@@ -15,6 +16,11 @@ function adicionar(app){
 
     //Autenticacion de usuarios
     app.post("/login", authController.ingresar);
+
+    // Rutas de Productos
+    app.get("/producto", productoController.listar);
+    app.post("/producto", productoController.guardar);
+    app.get("/producto/:id", productoController.mostrar);
 
 }
 
