@@ -1,5 +1,6 @@
 // importar modulos
-const express = require("express");
+import express from "express";
+//const express = require("express");
 const rutas = require("./routes/index.js");
 const db = require("./database/db")
 
@@ -36,5 +37,5 @@ rutas.adicionar(app);
 
 // Levantar el servidor
 app.listen(puerto, host, () => {
-    console.log("Servidor levantado: http://"+host+":"+puerto);
+    console.log(`Servidor levantado: http://${host}:${puerto}`);
 });
