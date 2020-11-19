@@ -1,7 +1,9 @@
 const inicio_controller = require("./../controllers/inicioController");
 const usuario_controller = require("./../controllers/usuarioController");
 const authController = require("./../controllers/authController");
+// const productoController = require("./../controllers/productoController");
 import productoController from "./../controllers/productoController";
+import personaController from "./../controllers/personaController"
 
 function adicionar(app){
 
@@ -21,6 +23,15 @@ function adicionar(app){
     app.get("/producto", productoController.listar);
     app.post("/producto", productoController.guardar);
     app.get("/producto/:id", productoController.mostrar);
+    app.put("/producto/:id", productoController.modificar);
+    app.delete("/producto/:id", productoController.eliminar);
+
+    // Rutas de Persona
+    app.get("/persona", personaController.listar);
+    app.post("/persona", personaController.guardar);
+    app.get("/persona/:id", personaController.mostrar);
+    app.put("/persona/:id", personaController.modificar);
+    app.delete("/persona/:id", personaController.eliminar);
 
 }
 

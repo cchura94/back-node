@@ -1,21 +1,21 @@
 //importamos el model
-import {Producto} from './../models/index'
+import {Persona} from './../models/index'
 
 
 const listar = async (req, res) => {
     try{
-        let datos = await Producto.findAll();
+        let datos = await Persona.findAll();
         res.json(datos);
     }catch(err) {
         console.log(err);
-        res.json({mensaje: "Ocurrio un problema al recuperar los producto"}); 
+        res.json({mensaje: "Ocurrio un problema al recuperar las personas"}); 
     }
 }
 
 const guardar = async (req, res) => {
     try {
-        let prod = await Producto.create(req.body);
-        res.json({mensaje: "Producto registrado", dato: prod});
+        let per = await Persona.create(req.body);
+        res.json({mensaje: "Persona registrado", dato: per});
     } catch (error) {
         res.json({mensaje: "Ocurrio un problema al crear el producto"});
     }
@@ -24,12 +24,12 @@ const guardar = async (req, res) => {
 const mostrar = async (req, res) => {
     try {
         let id = req.params.id;
-        let prod = await Producto.findOne({
+        let per = await Persona.findOne({
             where: {
                 id
             }
         });
-        res.json(prod);
+        res.json(per);
     } catch (error) {
         res.json({mensaje: "Ocurrio un problema al buscar el producto"});
     }
@@ -39,8 +39,8 @@ const modificar = async (req, res) =>{
     // Validar antes de guardar
     try {
         let id = req.params.id;
-        let respuesta = await Producto.update(req.body, {where: {id: id}});
-        res.json({mensaje: "Producto Modificado"});
+        let respuesta = await Persona.update(req.body, {where: {id: id}});
+        res.json({mensaje: "Persona Modificado"});
     } catch (error) {
         console.log(error)
         res.json({mensaje: "Ocurrio un problema al modificar el producto"});
@@ -50,12 +50,12 @@ const modificar = async (req, res) =>{
 const eliminar = async (req, res) => {
     try {
         let id_prod = req.params.id;
-        await Producto.destroy({
+        await Persona.destroy({
             where: {
               id: id_prod
             }
           });
-          res.json({mensaje: "Producto eliminado"});
+          res.json({mensaje: "Persona eliminado"});
         
     } catch (error) {
         res.json({mensaje: "Ocurrio un problema al modificar el producto"});
