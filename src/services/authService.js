@@ -21,7 +21,8 @@ const login = async (datos) => {
     const payload = {
         correo: user.correo,
         id: user.id,
-        time: new Date()
+        time: new Date(),
+        tiempo_expiracion: config.tiempo_expiracion
     }
 
     var token = jwt.sign(payload, config.secret_key, {

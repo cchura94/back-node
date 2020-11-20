@@ -5,6 +5,8 @@ const authController = require("./../controllers/authController");
 import productoController from "./../controllers/productoController";
 import personaController from "./../controllers/personaController"
 
+import authMiddleware from "./../middleware/authMiddleware"
+
 function adicionar(app){
 
     app.get("/", inicio_controller.inicio);
@@ -20,18 +22,18 @@ function adicionar(app){
     app.post("/login", authController.ingresar);
 
     // Rutas de Productos
-    app.get("/producto", productoController.listar);
-    app.post("/producto", productoController.guardar);
-    app.get("/producto/:id", productoController.mostrar);
-    app.put("/producto/:id", productoController.modificar);
-    app.delete("/producto/:id", productoController.eliminar);
+    app.get("/producto", authMiddleware.verificaAuth, productoController.listar);
+    app.post("/producto", authMiddleware.verificaAuth, productoController.guardar);
+    app.get("/producto/:id", authMiddleware.verificaAuth, productoController.mostrar);
+    app.put("/producto/:id",authMiddleware.verificaAuth, productoController.modificar);
+    app.delete("/producto/:id", authMiddleware.verificaAuth, productoController.eliminar);
 
     // Rutas de Persona
-    app.get("/persona", personaController.listar);
-    app.post("/persona", personaController.guardar);
-    app.get("/persona/:id", personaController.mostrar);
-    app.put("/persona/:id", personaController.modificar);
-    app.delete("/persona/:id", personaController.eliminar);
+    app.get("/persona",authMiddleware.verificaAuth, personaController.listar);
+    app.post("/persona", authMiddleware.verificaAuth, personaController.guardar);
+    app.get("/persona/:id", authMiddleware.verificaAuth, personaController.mostrar);
+    app.put("/persona/:id", authMiddleware.verificaAuth, personaController.modificar);
+    app.delete("/persona/:id", authMiddleware.verificaAuth, personaController.eliminar);
 
 }
 
