@@ -88,5 +88,6 @@ module.exports = {
     Usuario,
     Persona,
     Producto,
-    Role
+    Role,
+    Pedido
 }

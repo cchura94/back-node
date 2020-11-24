@@ -1,11 +1,15 @@
 //importamos el model
-import {Producto} from './../models/index'
+import {Producto} from './../models/index';
+
+const sequelize = require("./../database/db")
 
 
 const listar = async (req, res) => {
     try{
-        let datos = await Producto.findAll();
-        res.json(datos);
+        //let datos = await Producto.findAll();
+        //res.json(datos);
+        const [results, metadata] = await sequelize.query("SELECT * FROM productos");
+        res.json(results);
     }catch(err) {
         console.log(err);
         res.json({mensaje: "Ocurrio un problema al recuperar los producto"}); 

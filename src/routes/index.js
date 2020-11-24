@@ -3,7 +3,8 @@ const usuario_controller = require("./../controllers/usuarioController");
 const authController = require("./../controllers/authController");
 // const productoController = require("./../controllers/productoController");
 import productoController from "./../controllers/productoController";
-import personaController from "./../controllers/personaController"
+import personaController from "./../controllers/personaController";
+import pedidoController from "./../controllers/pedidoController"
 
 import authMiddleware from "./../middleware/authMiddleware"
 
@@ -35,6 +36,11 @@ function adicionar(app){
     app.put("/persona/:id", authMiddleware.verificaAuth, personaController.modificar);
     app.delete("/persona/:id", authMiddleware.verificaAuth, personaController.eliminar);
 
+    //AddProducto a Pedido
+    app.get("/pedido/:id/comprar", pedidoController.compraProductos);
+    // Rutas para Pedidos
+    app.get("/pedido", authMiddleware.verificaAuth, pedidoController.index)
+    app.post("/pedido", authMiddleware.verificaAuth, pedidoController.store)
 }
 
 module.exports = {
