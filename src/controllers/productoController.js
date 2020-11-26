@@ -18,6 +18,11 @@ const listar = async (req, res) => {
 
 const guardar = async (req, res) => {
     try {
+        console.log("1. Antes: ", req.body)
+        if(req.file){
+            req.body.imagen = req.file.filename
+        }
+        console.log("1. Despues: ", req.body)
         let prod = await Producto.create(req.body);
         res.json({mensaje: "Producto registrado", dato: prod});
     } catch (error) {

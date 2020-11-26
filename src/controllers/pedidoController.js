@@ -29,6 +29,13 @@ const store = async (req, res) => {
 //mostrar
 const show = async (req, res) => {
     try {
+        let id_pedido = req.params.id;
+
+        const result = await Pedido.findOne({
+            where: { id: id_pedido },
+            include: Producto
+        });
+        res.json(result)
         
     } catch (error) {
         
@@ -56,26 +63,39 @@ const destroy = async (req, res) => {
     }
 }
 
-const compraProductos = async (req, res) => {
+const nuevoPedido = async (req, res) => {
     try {
-        
-        var id_pedido = req.params.id;
-        const ped = await Pedido.findOne({where: {id: id_pedido}});
-        console.log("Llegandooo", ped)
-        const prod = await Producto.create({titulo: "Producto prueba", precio: 100, cantidad: 5});
-        const prod2 = await Producto.create({titulo: "Producto prueba 2", precio: 150, cantidad: 15});
-        
-        await ped.addProducto(prod);
-        await ped.addProducto(prod2);
+        //Verificar el usuario actual
 
-        const result = await Pedido.findOne({
-            where: { id: id_pedido },
-            include: Producto
+        //Primero obtener el (id_persona) o id_usuario
+        let persona_id = req.body.persona_id;  // obtener de la sesion actual
+
+        //Procesar los datos y validar
+        let ped = {
+            fecha: req.body.fecha, // generar fecha y hora del servidor
+            precio_total: 0, // modificar una vez que se registre el producto
+            estado: false, // cambiar cuando se culmine el pedido
+            persona_id: persona_id
+        }
+        
+        let pedido = await Pedido.create(ped);
+
+        let lista_productos = req.body.productos;
+        // Recorriendo y registrando los productos a un pedido
+        lista_productos.forEach(async (prod) => {
+            
+            const producto = await Producto.findOne({where: {id: prod}});
+            //verificamos la disponibilidad del producto
+
+            // agreamos el producto a la tabla relacion (n:m) (carrito)
+            await pedido.addProducto(producto); // necesitamos registrar la cantidad de compra
         });
-        res.json(result)
+        
+        res.json({mensaje: "Pedido registrado correctamente"})        
 
     } catch (error) {
         console.log(error)
+        res.json({mensaje: "Ocurrio un problema al realizar el pedido"}) 
     }
 
 }
@@ -86,5 +106,5 @@ module.exports = {
     update,
     show,
     destroy,
-    compraProductos
+    nuevoPedido
 }

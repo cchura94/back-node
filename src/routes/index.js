@@ -8,6 +8,24 @@ import pedidoController from "./../controllers/pedidoController"
 
 import authMiddleware from "./../middleware/authMiddleware"
 
+import multer from 'multer'
+// Configuracion para subida de imagenes con multer
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "./src/public/imagenes");
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now()+"-"+file.originalname)        
+    }
+});
+
+const upload = multer({
+    storage
+}).single("imagen");
+
+// RUTAS
+
 function adicionar(app){
 
     app.get("/", inicio_controller.inicio);
@@ -24,7 +42,7 @@ function adicionar(app){
 
     // Rutas de Productos
     app.get("/producto", authMiddleware.verificaAuth, productoController.listar);
-    app.post("/producto", authMiddleware.verificaAuth, productoController.guardar);
+    app.post("/producto", authMiddleware.verificaAuth, upload, productoController.guardar);
     app.get("/producto/:id", authMiddleware.verificaAuth, productoController.mostrar);
     app.put("/producto/:id",authMiddleware.verificaAuth, productoController.modificar);
     app.delete("/producto/:id", authMiddleware.verificaAuth, productoController.eliminar);
@@ -37,7 +55,7 @@ function adicionar(app){
     app.delete("/persona/:id", authMiddleware.verificaAuth, personaController.eliminar);
 
     //AddProducto a Pedido
-    app.get("/pedido/:id/comprar", pedidoController.compraProductos);
+    app.post("/pedido/nuevo-pedido", authMiddleware.verificaAuth, pedidoController.nuevoPedido);
     // Rutas para Pedidos
     app.get("/pedido", authMiddleware.verificaAuth, pedidoController.index)
     app.post("/pedido", authMiddleware.verificaAuth, pedidoController.store)
