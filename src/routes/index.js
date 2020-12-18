@@ -53,13 +53,15 @@ function adicionar(app){
     app.get("/persona/:id", authMiddleware.verificaAuth, personaController.mostrar);
     app.put("/persona/:id", authMiddleware.verificaAuth, personaController.modificar);
     app.delete("/persona/:id", authMiddleware.verificaAuth, personaController.eliminar);
+    app.get("/persona/:id_user", authMiddleware.verificaAuth, personaController.verificaCliente)
 
     //AddProducto a Pedido
     app.post("/pedido/nuevo-pedido", authMiddleware.verificaAuth, pedidoController.nuevoPedido);
     // Rutas para Pedidos
     app.get("/pedido", authMiddleware.verificaAuth, pedidoController.index)
     app.post("/pedido", authMiddleware.verificaAuth, pedidoController.store)
-}
+
+ }
 
 module.exports = {
     adicionar

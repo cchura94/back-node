@@ -1,5 +1,6 @@
 // importar modulos
 import express from "express";
+import path from 'path'
 //const express = require("express");
 const rutas = require("./routes/index.js");
 const db = require("./database/db")
@@ -26,6 +27,9 @@ var host = "127.0.0.1";
 
 // Configuración con los módulos
 var app = express();
+app.use('/', express.static(path.join(__dirname, 'public')))
+//app.use(express.static('public'))
+//app.use('/static', express.static(path.join(__dirname, 'public')))
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded

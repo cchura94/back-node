@@ -62,13 +62,29 @@ const eliminar = async (req, res) => {
     }
 }
 
+const verificaCliente = async (req, res) => {
+    try{
+        let id_user = req.params.id_user; //id de usuario
+        datos = await Persona.findOne({where: {usuario_id: id_user}})
+        if(datos){
+
+            res.json(datos);
+        }else{
+            res.json({estado: null})
+        }
+    }catch(error){
+        console.log(error)
+    }
+}
+
 
 module.exports = {
     listar,
     guardar,
     mostrar,
     modificar,
-    eliminar
+    eliminar,
+    verificaCliente
 }
 
 
