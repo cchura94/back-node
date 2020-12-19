@@ -28,7 +28,8 @@ const upload = multer({
 
 function adicionar(app){
 
-    app.get("/", inicio_controller.inicio);
+    app.get("/", authMiddleware.verificaAuth,inicio_controller.inicio);
+    app.get("/pagina", inicio_controller.listaProductos);
 
     //saludar
     app.get("/saludo", inicio_controller.saludo);
