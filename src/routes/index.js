@@ -42,7 +42,7 @@ function adicionar(app){
     app.post("/login", authController.ingresar);
 
     // Rutas de Productos
-    app.get("/producto", authMiddleware.verificaAuth, productoController.listar);
+    app.get("/producto/:page", authMiddleware.verificaAuth, productoController.listar);
     app.post("/producto", authMiddleware.verificaAuth, upload, productoController.guardar);
     app.get("/producto/:id", authMiddleware.verificaAuth, productoController.mostrar);
     app.put("/producto/:id",authMiddleware.verificaAuth, productoController.modificar);

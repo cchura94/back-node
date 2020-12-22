@@ -6,10 +6,16 @@ const sequelize = require("./../database/db")
 
 const listar = async (req, res) => {
     try{
-        //let datos = await Producto.findAll();
-        //res.json(datos);
-        const [results, metadata] = await sequelize.query("SELECT * FROM productos");
-        res.json(results);
+        let page = req.params.page;
+        let limit = 20
+        let offset = 0 + (page - 1) *limit
+        let datos = await Producto.findAll({
+            limit: limit,
+            offset: offset
+        });
+        res.json(datos);
+        //const [results, metadata] = await sequelize.query("SELECT * FROM productos");
+        //res.json(results);
     }catch(err) {
         console.log(err);
         res.json({mensaje: "Ocurrio un problema al recuperar los producto"}); 
